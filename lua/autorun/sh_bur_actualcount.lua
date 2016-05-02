@@ -62,6 +62,7 @@ if SERVER then
 					-- UNFREEZE ALL PLAYERS
 					RT_EnableMovement(true)
 					
+					--[[
 					local Drone = ents.Create("dronesrewrite_walkart")
 					Drone:SetPos(Vector(0,0,0))
 					Drone:SetAngles(Angle(0,0,0))
@@ -70,7 +71,7 @@ if SERVER then
 					Drone:Activate()
 					Drone:AddModule("AI Attack")
 					Drone:AddModule("AI Follow enemy")
-
+					--]]
 					
 				end
 				
