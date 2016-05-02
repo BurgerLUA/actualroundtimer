@@ -36,7 +36,7 @@ if SERVER then
 					
 				elseif Mode == "Round End" then
 				
-					RT_StartTimer(30,"Warm Up") -- Quick warump before match
+					RT_StartTimer(60,"Warm Up") -- Quick warump before match
 					-- HIDE LEADERBOARDS, CLEANUP THE MAP, START THE WARMUP PHASE, UNFREEZE PLAYERS, DISABLE SLOW MOTION
 					RT_ShowScoreboard(false)
 					game.CleanUpMap()
@@ -57,9 +57,20 @@ if SERVER then
 					
 				elseif Mode == "Round Start" then
 				
+					RT_PlaySound("ut/start2.wav","game")
 					RT_StartTimer(120,"Deathmatch")
 					-- UNFREEZE ALL PLAYERS
 					RT_EnableMovement(true)
+					
+					local Drone = ents.Create("dronesrewrite_walkart")
+					Drone:SetPos(Vector(0,0,0))
+					Drone:SetAngles(Angle(0,0,0))
+					Drone.Owner = Entity(0)
+					Drone:Spawn()
+					Drone:Activate()
+					Drone:AddModule("AI Attack")
+					Drone:AddModule("AI Follow enemy")
+
 					
 				end
 				
@@ -154,12 +165,13 @@ if SERVER then
 			if Sounds[time] then
 			
 				local SoundToPlayer = Sounds[time]
+				local SoundType = "game"
 			
 				if SoundToPlayer == "#music" then
-					SoundToPlayer = "ut/music" .. math.random(1,13) .. ".mp3"
+					SoundToPlayer = "ut/music" .. math.random(1,4) .. ".mp3"
 				end
 			
-				RT_PlaySound(SoundToPlayer)	
+				RT_PlaySound(SoundToPlayer,SoundType)	
 				
 			end
 		end
@@ -168,16 +180,15 @@ if SERVER then
 	
 	util.AddNetworkString( "RT_NetworkSound" )
 	
-	function RT_PlaySound(sound)
+	function RT_PlaySound(sound,soundtype)
 		net.Start("RT_NetworkSound")
-			net.WriteString(sound)			
+			net.WriteString(sound)	
+			--net.WriteString(soundtype)
 		net.Broadcast()
 	end
 	
 	function RT_AwardPlayers()
-	
-		--SimpleXPAddXPText(ply,xp,text,override)
-	
+
 		local Scores = RT_GetScores()
 		
 		local PlayerCount = table.Count(Scores)
@@ -203,12 +214,8 @@ if SERVER then
 			end
 
 		end
-		
-		
-	
-	
+
 	end
-	
 	
 end
 
@@ -233,11 +240,6 @@ function RT_Timer(Method,Value)
 	end
 
 	local World = Entity(EntNum)
-	
-	if SERVER then
-		--print("Final:",Method,Value)
-		--print(" ")
-	end
 	
 	if Method == "get" then
 		return World:GetNWInt(RoundTimerTime,Value)
@@ -281,8 +283,8 @@ if CLIENT then
 	local Scores = nil
 	
 	net.Receive("RT_NetworkSound", function(len)
-		local PlaySound = Sound(net.ReadString())
-		LocalPlayer():EmitSound(PlaySound)
+		local GetSound = net.ReadString()
+		LocalPlayer():EmitSound(GetSound)
 	end)
 	
 	function RT_DrawHud()
