@@ -23,8 +23,7 @@ if SERVER then
 			if Timer > 0 then
 				RT_Timer("add",-1)
 			else
-			
-			
+
 				if Mode == "Deathmatch" then
 				
 					RT_StartTimer(10,"Round End") -- Leaderboard Phase
