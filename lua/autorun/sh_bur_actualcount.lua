@@ -169,7 +169,7 @@ if SERVER then
 	Sounds[10] = "ut/cd10.wav"
 	
 	Sounds[30] = "ut/cd30.wav"
-	Sounds[58] = "#music"
+	--Sounds[58] = "#music"
 	Sounds[60] = "ut/cd1min.wav"
 	Sounds[180] = "ut/cd3min.wav"
 	Sounds[300] = "ut/cd5min.wav"
@@ -200,7 +200,6 @@ if SERVER then
 	function RT_PlaySound(sound,soundtype)
 		net.Start("RT_NetworkSound")
 			net.WriteString(sound)	
-			--net.WriteString(soundtype)
 		net.Broadcast()
 	end
 	
@@ -212,7 +211,6 @@ if SERVER then
 		
 		for k,data in pairs(Scores) do
 		
-			local Multiplier = 0.5 + ( PlayerCount * 0.5 * (1/5) )
 			local position = k
 			local ply = data.ply
 			local kills = data.kills
@@ -220,14 +218,15 @@ if SERVER then
 			
 			if ply and ply:IsValid() then
 				if position == 1 then
-					SimpleXPAddXPText(ply,1000 * Multiplier,"1ST PLACE VICTORY",false)
+					SimpleXPAddXPText(ply,100 * PlayerCount,"1ST PLACE VICTORY",false)
 				elseif position == 2 then
-					SimpleXPAddXPText(ply,500 * Multiplier,"2ND PLACE VICTORY",false)
+					SimpleXPAddXPText(ply,50 * PlayerCount,"2ND PLACE VICTORY",false)
 				elseif position == 3 then
-					SimpleXPAddXPText(ply,250 * Multiplier,"3RD PLACE VICTORY",false)
+					SimpleXPAddXPText(ply,25 * PlayerCount,"3RD PLACE VICTORY",false)
 				else
-					SimpleXPAddXPText(ply,100 * Multiplier,"PARTICIPATION AWARD",false)
+					SimpleXPAddXPText(ply,10 * PlayerCount,"PARTICIPATION AWARD",false)
 				end
+				SimpleXPAddXPText(ply,10 * kills,"KILL BONUS",false)
 			end
 
 		end
