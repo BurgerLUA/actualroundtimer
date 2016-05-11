@@ -5,6 +5,23 @@ local EntNum = 1
 
 if SERVER then
 
+	resource.AddFile("sound/ut/cd1.wav")
+	resource.AddFile("sound/ut/cd1min.wav")
+	resource.AddFile("sound/ut/cd2.wav")
+	resource.AddFile("sound/ut/cd3.wav")
+	resource.AddFile("sound/ut/cd3min.wav")
+	resource.AddFile("sound/ut/cd4.wav")
+	resource.AddFile("sound/ut/cd5.wav")
+	resource.AddFile("sound/ut/cd5min.wav")
+	resource.AddFile("sound/ut/cd6.wav")
+	resource.AddFile("sound/ut/cd7.wav")
+	resource.AddFile("sound/ut/cd8.wav")
+	resource.AddFile("sound/ut/cd9.wav")
+	resource.AddFile("sound/ut/cd10.wav")
+	resource.AddFile("sound/ut/cd30.wav")
+	resource.AddFile("sound/ut/start1.wav")
+	resource.AddFile("sound/ut/winner.wav")
+
 	function RT_StartTimer(time,mode)
 		RT_Timer("setmode",mode)
 		RT_Timer("set",time)
