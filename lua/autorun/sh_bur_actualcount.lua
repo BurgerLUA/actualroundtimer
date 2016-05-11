@@ -73,7 +73,7 @@ if SERVER then
 					
 				elseif Mode == "Round Start" then
 				
-					RT_PlaySound("ut/start2.wav","game")
+					RT_PlaySound("ut/start1.wav","game")
 					RT_StartTimer(120,"Deathmatch")
 					-- UNFREEZE ALL PLAYERS
 					RT_EnableMovement(true)
